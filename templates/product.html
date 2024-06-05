@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Products{% endblock %}
+
+{% block content %}
+    <h2>Products</h2>
+    
+    <table>
+        <tr>
+            <th>Product ID</th>
+            <th>Name</th>
+            <th> Description </th>
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
+        {% for product in products %}
+        <tr>
+            <td>{{ product.id }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.description }}</td>
+            <td>{{ product.price }}</td>
+            <td>
+                <form method="POST" action="product_id=product.id">
+                    <input type="hidden" name="product_id" value="{{ product.id }}">
+                    <button type="submit">Buy</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endblock %}
+    
+
+
+</body>
+</html>
