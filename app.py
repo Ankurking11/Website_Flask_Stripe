@@ -22,7 +22,7 @@ def __init__(self,id,name,email):
     self.id = id
     self.name = name
     self.email = email
-    self.password = password
+    self.password = 0
 
 
 @app.route('/')
@@ -30,7 +30,7 @@ def index():
     return render_template('index.html')
 
 @app.route('/register', methods=['POST','GET'])
-def register
+def register:
 
 if __name__ == '__main__':
     app.run(debug=True)
