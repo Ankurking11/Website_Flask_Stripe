@@ -47,7 +47,7 @@ class Transaction(db.Model):
 
 @app.route('/')
 def index():
-    return render_template('login.html')
+    return render_template('index.html')
 
 
 #register
