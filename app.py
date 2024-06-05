@@ -28,7 +28,7 @@ class Product(db.Model):
     __tablename__='product'
     id = db.Column(db.Integer, primary_key=True, unique=True)
     name = db.Column(db.String(40), nullable=False)
-    desc = db.Column(db.String(100), nullable=False)
+    descr = db.Column(db.String(100), nullable=False)
     price = db.Column(db.Float, nullable=False)
 
 
@@ -47,7 +47,8 @@ class Transaction(db.Model):
 
 @app.route('/')
 def index():
-    return render_template('product.html')
+    products = Product.query.all()#remove this
+    return render_template('login.html',products=products)#change this 
 
 
 #register
@@ -61,7 +62,9 @@ def register():
         user = User(name=name, email=email, password=password)
         db.session.add(user)
         db.session.commit()
-        return redirect('login.html')
+        session['user_id'] = user.id
+        products = Product.query.all()
+        return render_template('product.html', products=products)
 
 #login
 @app.route('/login', methods=['GET', 'POST'])
@@ -71,14 +74,28 @@ def login():
         password = request.form['password']
         user = User.query.filter_by(email=email).first()
         if password == user.password:
+            session['user_id'] = user.id
             flash('Login Successful')
-            return render_template('index.html')
-        # if user and user.password:
-        #     login_user(user)
-        #     return redirect('index.html')
+            products = Product.query.all()
+            return render_template('product.html', products=products)
         else:
             flash('Invalid email or password')
     return render_template('login.html')
+
+
+#buy
+@app.route('/buy/<int:product_id>', methods=['GET', 'POST'])
+def buy(product_id):
+    if request.method == 'POST':
+        user_id = session['user_id']
+        product = Product.query.filter_by(id=product_id).first()
+        amount = product.price
+       # transaction = Transaction(product_id=product_id, user_id=user_id, transaction_id='123', amount=amount)
+        # db.session.add(transaction)
+        # db.session.commit()
+        return render_template('checkout.html')
+    return render_template('buy.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -7,7 +7,9 @@ header {
 
 
   body {
-    font-family: Arial;
+    font-family: sans-serif;
+    font-size: large;
+    font-style: italic;
     text-align: center;
     padding: 10px;
     background-image: url(https://as2.ftcdn.net/v2/jpg/04/56/96/05/1000_F_456960548_GaaZOACDdJRTMtZi90FEI1H7VColmiHx.jpg);
