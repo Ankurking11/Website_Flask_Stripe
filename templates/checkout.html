@@ -4,7 +4,15 @@
 
 {% block content %}
 
-<h2>checkout  </h2>
+<h2>Checkout</h2>
+<div class="product-details">
+    <h3>Order Summary</h3>
+    <p>{{product.id}}</p>
+    <p>{{ product.name }}</p>
+    <p>{{ product.desc}}</p>
+    <p class="price">₹{{ product.price }}</p>
+</div>
+
 <form action="/success"  method="POST">
     <script
         src="https://checkout. razorpay.com/v1/checkout.js"
