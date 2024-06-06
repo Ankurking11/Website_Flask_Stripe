@@ -23,7 +23,6 @@ class User(db.Model):
     email = db.Column(db.String(50), nullable=False)
     password = db.Column(db.String(50), nullable=False)
 
-
 #product table
 class Product(db.Model):
     __tablename__='product'
@@ -31,7 +30,6 @@ class Product(db.Model):
     name = db.Column(db.String(40), nullable=False)
     descr = db.Column(db.String(100), nullable=False)
     price = db.Column(db.Float, nullable=False)
-
 
 #transaction table
 class Transaction(db.Model):
@@ -48,9 +46,14 @@ class Transaction(db.Model):
 
 @app.route('/')
 def index():
-    #products = Product.query.all()#remove this
-    return render_template('login.html')#change this 
+    return render_template('landing.html')
 
+
+@app.route('/directLogin')
+def login():return render_template('login.html')
+
+@app.route('/directRegister')
+def login():return render_template('register.html')
 
 #register
 @app.route('/register', methods=['POST','GET'])
@@ -100,8 +103,6 @@ def buy(product_id):
 
         return render_template('checkout.html',user=user,product=product, amount = amount, payment = payment)
     return render_template('buy.html')
-
-
 
 
 #success
