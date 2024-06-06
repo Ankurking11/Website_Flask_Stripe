@@ -11,13 +11,13 @@
     <p class="price">₹{{ product.price }}</p>
 </div>
 
-<form action="/success"  method="POST">
+<form action="/success/{{ payment.id }}/{{ product.id }}"  method="POST">
     <script
         src="https://checkout.razorpay.com/v1/checkout.js"
         data-key="rzp_test_I9GZQqSmWyMm0h" #Enter the Key ID generated from the Dashboard
         data-amount="{{ payment['amount'] }}" #Amount is in currency subunits. Default currency is INR.
         data-currency="INR"
-        data-order_id="{{ payment['order_id'] }}" #This is a sample Order ID. Pass the `id` obtained
+        data-order_id="{{ payment.id }}" #This is a sample Order ID. Pass the `id` obtained
         data-buttontext="Pay with Razorpay"
         data-name="Acme Corp"
         data-description="Test transaction"
