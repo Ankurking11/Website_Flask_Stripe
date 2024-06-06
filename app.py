@@ -50,7 +50,7 @@ class Transaction(db.Model):
 @app.route('/')
 def index():
     #products = Product.query.all()#remove this
-    return render_template('login.html')#change this 
+    return render_template('register.html')#change this 
 
 
 #register
@@ -90,26 +90,19 @@ def login():
 def buy(product_id):
     if request.method == 'POST':
         user_id = session['user_id']
+        user = User.query.filter_by(id=user_id).first()
         product = Product.query.filter_by(id=product_id).first()
-        amount = product.price
+        amount = product.price*100
        # transaction = Transaction(product_id=product_id, user_id=user_id, transaction_id='123', amount=amount)
         # db.session.add(transaction)
         # db.session.commit()
-        return render_template('checkout.html',user_id = user_id, 
-                               product_id = product.id, amount = amount)
+        client = razorpay.Client(auth = ("rzp_test_I9GZQqSmWyMm0h" , "Ft34wtwLr0olMmEaK0GV5vJb"))
+        payment = client.order.create({'amount': amount, 'currency': 'INR', 'payment_capture': '1'})
+
+        return render_template('checkout.html',user=user,product=product, amount = amount, payment = payment)
     return render_template('buy.html')
 
-#checkout
-@app.route('/checkout', methods = ['POST','GET'])
-def checkout(product_id):
-    if request.method == 'POST':
-        user_id = session['user_id']
-        product = Product.query.filter_by(id=product_id).first()
-        amount = product.price
-        client = razorpay.Client(auth = ("rzp_test_I9GZQqSmWyMm0h" , "Ft34wtwLr0olMmEaK0GV5vJb"))
-        payment = client.order.create({'amount': amount*100, 'currency': 'INR', 'payment_capture': '1'})
 
-    return render_template("product.html")
 
 
 #success

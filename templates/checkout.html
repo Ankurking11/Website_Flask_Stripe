@@ -4,12 +4,10 @@
 
 {% block content %}
 
-<h2>checkout  </h2>
 <div class="product-details">
     <h3>Order Summary</h3>
-    <p>{{product.id}}</p>
     <p>{{ product.name }}</p>
-    <p>{{ product.desc}}</p>
+    <p>{{ product.descr }}</p>
     <p class="price">₹{{ product.price }}</p>
 </div>
 
@@ -17,15 +15,18 @@
     <script
         src="https://checkout.razorpay.com/v1/checkout.js"
         data-key="rzp_test_I9GZQqSmWyMm0h" #Enter the Key ID generated from the Dashboard
-        data-amount="{{amount}}" #Amount is in currency subunits. Default currency is INR.
+        data-amount="{{ payment['amount'] }}" #Amount is in currency subunits. Default currency is INR.
         data-currency="INR"
-        data-order_id="order_CgmcjRh9ti2lP7" #This is a sample Order ID. Pass the `id` obtained
+        data-order_id="{{ payment['order_id'] }}" #This is a sample Order ID. Pass the `id` obtained
         data-buttontext="Pay with Razorpay"
         data-name="Acme Corp"
         data-description="Test transaction"
         data-theme.color="#F37254"
     ></script>
     <input type="hidden" custom="Hidden Element" name="hidden">
+    <input type="hidden" name="razorpay_payment_id" id="razorpay_payment_id">
+    <input type="hidden" name="razorpay_order_id" id="razorpay_order_id">
+    <input type="hidden" name="razorpay_signature" id="razorpay_signature">
 </form>
 
 {% endblock %}
