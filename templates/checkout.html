@@ -5,5 +5,19 @@
 {% block content %}
 
 <h2>checkout  </h2>
+<form action="/success"  method="POST">
+    <script
+        src="https://checkout. razorpay.com/v1/checkout.js"
+        data-key="rzp_test_I9GZQqSmWyMm0h" #Enter the Key ID generated from the Dashboard
+        data-amount="50000" #Amount is in currency subunits. Default currency is INR.
+        data-currency="INR"
+        data-order_id="order_CgmcjRh9ti2lP7" #This is a sample Order ID. Pass the `id` obtained
+        data-buttontext="Pay with Razorpay"
+        data-name="Acme Corp"
+        data-description="Test transaction"
+        data-theme.color="#F37254"
+    ></script>
+    <input type="hidden" custom="Hidden Element" name="hidden">
+    </form>
 
 {% endblock %}

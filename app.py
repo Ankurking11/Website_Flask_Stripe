@@ -13,6 +13,7 @@ app.secret_key = "GeeksForGeeks"
 app.config['SQLALCHEMY_DATABASE_URI'] ='postgresql://postgres:adminpass@localhost/demo1'
 db = SQLAlchemy(app)
 app.app_context().push()
+app.config['SECRET_KEY'] = 'PAYMENT_APP'
 
 #user table
 class User(db.Model):
