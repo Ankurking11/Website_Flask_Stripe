@@ -46,7 +46,7 @@ class Transaction(db.Model):
 
 @app.route('/')
 def index():
-    return render_template('login.html')
+    return render_template('index.html')
 
 
 # @app.route('/directLogin')
@@ -69,6 +69,8 @@ def register():
         session['user_id'] = user.id
         products = Product.query.all()
         return render_template('product.html', products=products)
+    
+    return render_template('register.html')
 
 #login
 @app.route('/login', methods=['GET', 'POST'])
