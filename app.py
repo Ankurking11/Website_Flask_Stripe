@@ -1,7 +1,8 @@
-from flask import Flask, render_template, redirect, flash, url_for, request, session
+from flask import Flask, render_template, redirect, flash, url_for, request, session, make_response
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
+import razorpay
 # from models import db, User, Product, Transaction
 # from config import Config
 #import razorpay
@@ -48,8 +49,8 @@ class Transaction(db.Model):
 
 @app.route('/')
 def index():
-    products = Product.query.all()#remove this
-    return render_template('login.html',products=products)#change this 
+    #products = Product.query.all()#remove this
+    return render_template('login.html')#change this 
 
 
 #register
@@ -94,9 +95,26 @@ def buy(product_id):
        # transaction = Transaction(product_id=product_id, user_id=user_id, transaction_id='123', amount=amount)
         # db.session.add(transaction)
         # db.session.commit()
-        return render_template('checkout.html')
+        return render_template('checkout.html',user_id = user_id, 
+                               product_id = product.id, amount = amount)
     return render_template('buy.html')
 
+#checkout
+@app.route('/checkout', methods = ['POST','GET'])
+def checkout(product_id):
+    if request.method == 'POST':
+        user_id = session['user_id']
+        product = Product.query.filter_by(id=product_id).first()
+        amount = product.price
+        client = razorpay.Client(auth = ("rzp_test_I9GZQqSmWyMm0h" , "Ft34wtwLr0olMmEaK0GV5vJb"))
+        payment = client.order.create({'amount': amount*100, 'currency': 'INR', 'payment_capture': '1'})
 
+    return render_template("product.html")
+
+
+#success
+@app.route('/success', methods=['GET','POST'])
+def success():
+    return render_template("success.html")
 if __name__ == '__main__':
     app.run(debug=True)
