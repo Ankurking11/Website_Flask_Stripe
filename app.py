@@ -46,14 +46,14 @@ class Transaction(db.Model):
 
 @app.route('/')
 def index():
-    return render_template('landing.html')
+    return render_template('login.html')
 
 
-@app.route('/directLogin')
-def login():return render_template('login.html')
+# @app.route('/directLogin')
+# def login():return render_template('login.html')
 
-@app.route('/directRegister')
-def login():return render_template('register.html')
+# @app.route('/directRegister')
+# def login():return render_template('register.html')
 
 #register
 @app.route('/register', methods=['POST','GET'])

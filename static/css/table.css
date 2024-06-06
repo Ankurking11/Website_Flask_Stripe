@@ -1,0 +1,23 @@
+table{
+    border-collapse: collapse;
+    width : 70%;
+    text-align: center;
+
+}
+
+table, th, td {
+    border: 1px solid;
+    padding:   15px;
+
+}
+tr:hover {background-color: coral;}
+
+th {
+  background-color: #04AA6D;
+  color: white;
+}
+
+.table{
+    display: block;
+    height: 20%;
+}

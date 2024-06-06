@@ -2,32 +2,39 @@
 
 {% block title %}Products{% endblock %}
 
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/table.css') }}">
+
+{% endblock %}
+
 {% block content %}
     <h2>Products</h2>
     <center>
-        <table>
-            <tr>
-                <th>Product ID</th>
-                <th>Name</th>
-                <th> Description </th>
-                <th>Price</th>
-                <th>Action</th>
-            </tr>
-            {% for product in products %}
-            <tr>
-                <td>{{ product.id }}</td>
-                <td>{{ product.name }}</td>
-                <td>{{ product.descr }}</td>
-                <td>{{ product.price }}</td>
-                <td>
-                    <form method="POST" action="/buy/{{ product.id }}">
-                        <input type="hidden" name="product_id" value="{{ product.id }}">
-                        <button type="submit">Buy</button>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
+        <div class="table">
+            <table>
+                <tr>
+                    <th>Product ID</th>
+                    <th>Name</th>
+                    <th> Description </th>
+                    <th>Price</th>
+                    <th>Action</th>
+                </tr>
+                {% for product in products %}
+                <tr>
+                    <td>{{ product.id }}</td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.descr }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>
+                        <form method="POST" action="/buy/{{ product.id }}">
+                            <input type="hidden" name="product_id" value="{{ product.id }}">
+                            <button type="submit">Buy</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
     </center>
     {% endblock %}
     
