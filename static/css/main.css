@@ -24,7 +24,7 @@ body, html {
 }
 
 header {
-    margin: 0px;
+  margin: 0px;
   padding: 30px;
   text-align: center;
   background-image: url(https://th.bing.com/th/id/R.bfef53cb83a8a598a918f8b0f3be6aac?rik=bSpvtN90PhT5Lg&riu=http%3a%2f%2fwww.pixelstalk.net%2fwp-content%2fuploads%2f2016%2f08%2fDesign-Wallpaper-HD.jpg&ehk=BxAqKFK7r2bAs5zqtVASyN1wlYwSTmu2WrL8TMt09CM%3d&risl=&pid=ImgRaw&r=0);
@@ -47,7 +47,7 @@ header {
   footer {
     position: fixed;
     bottom: 15px;
-    width : 94%;
+    width : 91%;
     margin: 0px;
     padding: 30px;
     text-align: center;

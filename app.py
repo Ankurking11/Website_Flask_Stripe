@@ -8,7 +8,6 @@ import razorpay
 
 # Initialize Flask app
 app = Flask(__name__)
-app.secret_key = "GeeksForGeeks"
 
 app.config['SQLALCHEMY_DATABASE_URI'] ='postgresql://postgres:adminpass@localhost/demo1'
 db = SQLAlchemy(app)
@@ -34,7 +33,7 @@ class Product(db.Model):
 #transaction table
 class Transaction(db.Model):
     __tablename__='transaction'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, unique=True)
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     transaction_id = db.Column(db.String(100), nullable=False)
@@ -47,13 +46,6 @@ class Transaction(db.Model):
 @app.route('/')
 def index():
     return render_template('index.html')
-
-
-# @app.route('/directLogin')
-# def login():return render_template('login.html')
-
-# @app.route('/directRegister')
-# def login():return render_template('register.html')
 
 #register
 @app.route('/register', methods=['POST','GET'])
@@ -97,9 +89,6 @@ def buy(product_id):
         user = User.query.filter_by(id=user_id).first()
         product = Product.query.filter_by(id=product_id).first()
         amount = product.price*100
-       # transaction = Transaction(product_id=product_id, user_id=user_id, transaction_id='123', amount=amount)
-        # db.session.add(transaction)
-        # db.session.commit()
         client = razorpay.Client(auth = ("rzp_test_I9GZQqSmWyMm0h" , "Ft34wtwLr0olMmEaK0GV5vJb"))
         payment = client.order.create({'amount': amount, 'currency': 'INR', 'payment_capture': '1'})
 
@@ -112,11 +101,11 @@ def buy(product_id):
 def success(order_id,product_id):
     order_id = order_id
     prod_id = product_id
-    user_id=session['user_id']
+    user_id = session['user_id']
     client = razorpay.Client(auth = ("rzp_test_I9GZQqSmWyMm0h" , "Ft34wtwLr0olMmEaK0GV5vJb"))
     order_details = client.order.payments(order_id)
-    transaction_id = order_details['items'][0]['id']
-    amount = order_details['items'][0]['amount']/100
+    transaction_id = order_details['items'][-1]['id']
+    amount = order_details['items'][-1]['amount']/100
     status = order_details['items'][-1]['status']
 
     transaction = Transaction(product_id=prod_id, user_id=user_id, 
