@@ -117,7 +117,7 @@ def success(order_id,product_id):
     order_details = client.order.payments(order_id)
     transaction_id = order_details['items'][0]['id']
     amount = order_details['items'][0]['amount']/100
-    status = order_details['items'][0]['status']
+    status = order_details['items'][-1]['status']
 
     transaction = Transaction(product_id=prod_id, user_id=user_id, 
                               transaction_id=transaction_id, 
