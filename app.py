@@ -9,7 +9,7 @@ import razorpay
 # Initialize Flask app
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] ='postgresql://postgres:adminpass@localhost/demo1'
+app.config['SQLALCHEMY_DATABASE_URI'] ='postgresql://user:psaaword@host/dbName'
 db = SQLAlchemy(app)
 app.app_context().push()
 app.config['SECRET_KEY'] = 'PAYMENT_APP'
